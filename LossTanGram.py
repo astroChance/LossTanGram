@@ -57,6 +57,11 @@ class LossTanGram():
     get_surface_values_img()
         TO DO
         
+    auto_detect_surface(jump_threshold, arr=None, transpose=True, iterations=1)
+        Assumes the maximum value along each frame corresponds to the surface
+        return location, applies linear interpolation to smooth spikes. Increase
+        iterations to remove more spikes
+        
     to_segy(arr, output_path)
         creates a segyfile file of arr written to output_path using the 
         input segy file as a reference (i.e. all headers are copied)
@@ -379,6 +384,44 @@ class LossTanGram():
         """
         
         return
+    
+    
+    
+    #---------------------------------------------------------
+    def auto_detect_surface(self, jump_threshold, arr=None, transpose=True, iterations=1):
+        """
+        Detect surface return based on maximum amplitude values
+        """
+        if arr is None:
+            arr = self._input_arr
+        if transpose == True:
+            arr = arr.T
+            
+        null_val = -999
+        surface = []
+
+        for i in range(arr.shape[1]):
+            frame = arr[:,i]
+            surface.append(np.where(frame == np.amax(frame))[0][0])
+        surface = np.array(surface)
+
+        while iterations >= 1:
+            tmp_idxs = []
+            for i in range(len(surface)):
+                if i == 0 or i == len(surface)-1:
+                    continue
+                if np.abs(surface[i] - surface[i-1]) > jump_threshold:
+                    tmp_idxs.append(i)
+                if np.abs(surface[i] - surface[i+1]) > jump_threshold:
+                    tmp_idxs.append(i)
+
+            surface[tmp_idxs] = null_val
+            surface_idxs = np.arange(len(surface))
+            good_idxs = np.where(surface != null_val)
+            surface = np.interp(surface_idxs, surface_idxs[good_idxs], surface[good_idxs])
+            iterations -= 1
+
+        return surface
     
     
     
