@@ -1,0 +1,31 @@
+# <SeisWare SEG-Y Header Keyword File>
+struct HeaderWord {
+    Name Header Byte Type Scale
+}
+struct HeaderString {
+    Name Header Byte Size Type
+}
+HeaderWord "Sample Interval"              File    16 16BitInteger 1
+HeaderWord "Samples Per Trace"                File    20 16BitInteger 1
+HeaderWord "Data Format"                  File    24 16BitInteger 1
+HeaderWord "SEG-Y Revision"                   File    300 16BitInteger 1
+HeaderWord "Fixed Length Traces"          File    302 16BitInteger 1
+HeaderWord "Trace Counter"                    Trace   0 32BitInteger 1
+HeaderWord "CDP Number"                       Trace   20 32BitInteger 1
+HeaderWord "Dead Trace Flag"              Trace   28 16BitInteger 1
+HeaderWord "Fold"                         Trace   32 16BitInteger 1
+HeaderWord "Source Receiver Offset"           Trace   36 32BitInteger 1
+HeaderWord "Elevation"                        Trace   40 32BitInteger 1
+HeaderWord "Depth/Elevation Scalar"           Trace   68 16BitInteger 1
+HeaderWord "Coordinate Scalar"                Trace   70 16BitInteger 1
+HeaderWord "Source X Location"                Trace   72 32BitInteger 1
+HeaderWord "Source Y Location"                Trace   76 32BitInteger 1
+HeaderWord "Coordinate X"                 Trace   80 32BitInteger 1
+HeaderWord "Coordinate Y"                 Trace   84 32BitInteger 1
+HeaderWord "Weathering Velocity"          Trace   90 16BitInteger 1
+HeaderWord "Subweathering Velocity"           Trace   92 16BitInteger 1
+HeaderWord "Number of Samples"                Trace   114 16BitInteger 1
+HeaderWord "Sample Interval"              Trace   116 16BitInteger 1
+HeaderWord "Trace Sequence Number"            Trace   188 32BitInteger 1
+HeaderWord "Line Sequence Number"         Trace   192 32BitInteger 1
+HeaderWord "Shot Sequence Number"         Trace   196 32BitInteger 1
